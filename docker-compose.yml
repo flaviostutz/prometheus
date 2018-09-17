@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+
+  prometheus:
+    build: .
+    ports:
+      - 9090:9090
+    environment:
+      - SCRAPE_INTERVAL=15s
+      - EVALUATION_INTERVAL=15s
+      - SCRAPE_TIMEOUT=10s
+      - ALERTMANAGER_TARGETS=
+      - STATIC_SCRAPE_TARGETS=
+      - DNS_SCRAPE_TARGETS=
+
+  
