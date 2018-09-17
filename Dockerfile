@@ -19,7 +19,7 @@ ENV STATIC_SCRAPE_TARGETS ''
 ENV DNS_SCRAPE_TARGETS ''
 
 ADD startup.sh /
-ADD prometheus.yml.template /
 
 ENTRYPOINT [ "/bin/sh" ]
 CMD [ "/startup.sh" ]
+

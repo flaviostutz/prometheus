@@ -10,8 +10,8 @@ services:
       - SCRAPE_INTERVAL=15s
       - EVALUATION_INTERVAL=15s
       - SCRAPE_TIMEOUT=10s
-      - ALERTMANAGER_TARGETS=
-      - STATIC_SCRAPE_TARGETS=
-      - DNS_SCRAPE_TARGETS=
+      - ALERTMANAGER_TARGETS=alertmanager1:9090 alertmanager2:9090
+      - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384 scraphere22@scrapehere2:38485
+      - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111
 
   
