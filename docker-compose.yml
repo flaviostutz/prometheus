@@ -12,6 +12,6 @@ services:
       - SCRAPE_TIMEOUT=10s
       - ALERTMANAGER_TARGETS=alertmanager1:9090 alertmanager2:9090
       - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384 scraphere22@scrapehere2:38485
-      - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111
+      - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111 dnsscrape22@dnsscrape2:2222
 
   

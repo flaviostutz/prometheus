@@ -73,21 +73,35 @@ if [ "$DNS_SCRAPE_TARGETS" != "" ]; then
     do
         #this has to be done this ugly way because we don't have bash here, just sh!
         NAME=''
+        HOSTPORT=''
+        PORT=''
         HOST=''
-        i=0
+        a=0
         for ST in $(echo $SL | tr "@" "\n")
         do
-          if [ $i -eq 0 ]; then
+          if [ $a -eq 0 ]; then
             NAME=$ST
-            i=1
+            a=1
           else
-            HOST=$ST
+            HOSTPORT=$ST
+          fi
+        done
+        for HP in $(echo $HOSTPORT | tr ":" "\n")
+        do
+          if [ $a -eq 1 ]; then
+            HOST=$HP
+            a=2
+          else
+            PORT=$HP
           fi
         done
         cat >> $FILE <<- EOM
   - job_name: '$NAME'
     dns_sd_configs:
-    - names: ['$HOST']
+      - names:
+        - '$HOST'
+        type: 'A'
+        port: $PORT
 EOM
     done
 fi
