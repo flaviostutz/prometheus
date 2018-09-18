@@ -33,11 +33,13 @@ EOM
 fi
 
 
-if [ "$ALERTMANAGER_TARGETS" != "" ] || [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
-    cat >> $FILE <<- EOM
+cat >> $FILE <<- EOM
 scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+    - targets: ['localhost:9090']
+
 EOM
-fi
 
 #static scrapers
 if [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
