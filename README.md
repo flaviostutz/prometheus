@@ -29,9 +29,11 @@ services:
 
 - SCRAPE_INTERVAL: global time between scrappings
 - SCRAPE_TIMEOUT: time after which the scraped target will be considered 'down'
-- STATIC_SCRAPE_TARGETS: space separated list of "[name]@[host]:[port]"
+- STATIC_SCRAPE_TARGETS: space separated list of "[name]@[host]:[port]</[metrics_path]>"
   - Prometheus will try to get metrics from http://[host]:[port]/metrics. 
   - [name] will be used to label all metrics gotten from this target
-- DNS_SCRAPE_TARGETS: space separated list of "[name]@[record-name]:[port]"
+  - optionally, one can explicitly define the path to the metrics api via [metrics_path]
+- DNS_SCRAPE_TARGETS: space separated list of "[name]@[record-name]:[port]</[metrics_path]>"
   - Prometheus will query DNS server for a type 'A' entry with name [record-name] and then try to get metrics from each returned IP at http://[found-ip]:[port]/metrics. 
   - [name] will be used to label all metrics gotten from this target
+  - optionally, one can explicitly define the path to the metrics api via [metrics_path]
