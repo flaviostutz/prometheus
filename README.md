@@ -37,3 +37,13 @@ services:
   - Prometheus will query DNS server for a type 'A' entry with name [record-name] and then try to get metrics from each returned IP at http://[found-ip]:[port]/metrics. 
   - [name] will be used to label all metrics gotten from this target
   - optionally, one can explicitly define the path to the metrics api via [metrics_path]
+
+## RULES
+
+- This image looks for rule files at the container /etc/prometheus directory
+- The image will only build if nothing is wrong with the added rules
+- To add new rule files, you will need to extend this image and ADD it with your custom DockerFile:
+```
+ADD <rules path> /etc/prometheus
+```
+- An EMPTY rule was added for example purposes

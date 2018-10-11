@@ -14,6 +14,20 @@ global:
 
 EOM
 
+RULES=""
+NEWLINE=$'\n'
+for file in /etc/prometheus/*.yml; do
+    FILENAME="$(expr $file \: '/etc/prometheus/\(.*\)')"
+    if [ ! $FILENAME == "prometheus.yml" ]; then
+        RULES="${RULES}${NEWLINE}  - ${FILENAME}"
+    fi
+done
+
+cat >> $FILE <<- EOM
+rule_files: $RULES
+
+EOM
+
 
 #alert managers
 if [ "$ALERTMANAGER_TARGETS" != "" ]; then
