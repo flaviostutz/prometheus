@@ -49,6 +49,7 @@ if [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
         #this has to be done this ugly way because we don't have bash here, just sh!
         NAME=''
         HOST=''
+        METRICS_PATH=''
         i=0
         for ST in $(echo $SL | tr "@" "\n")
         do
@@ -59,16 +60,25 @@ if [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
             HOST=$ST
           fi
         done
+        
+        METRICS_PATH=$(echo $HOST | cut -d/ -f2-)
+        echo $METRICS_PATH
+        if [ "$METRICS_PATH" == "" ] || [ "$METRICS_PATH" == "$HOST" ]; then
+          METRICS_PATH="metrics"
+        fi
+        HOST=$(echo $HOST | cut -d/ -f1)
+
         cat >> $FILE <<- EOM
   - job_name: '$NAME'
+    metrics_path: /$METRICS_PATH
     static_configs:
     - targets: ['$HOST']
+
 EOM
     done
 fi
 
-
-#static scrapers
+#dns scrapers
 if [ "$DNS_SCRAPE_TARGETS" != "" ]; then
     #add each static scrape target
     for SL in $(echo $DNS_SCRAPE_TARGETS | tr " " "\n")
@@ -78,6 +88,7 @@ if [ "$DNS_SCRAPE_TARGETS" != "" ]; then
         HOSTPORT=''
         PORT=''
         HOST=''
+        METRICS_PATH=''
         a=0
         for ST in $(echo $SL | tr "@" "\n")
         do
@@ -88,6 +99,14 @@ if [ "$DNS_SCRAPE_TARGETS" != "" ]; then
             HOSTPORT=$ST
           fi
         done
+
+        METRICS_PATH=$(echo $HOSTPORT | cut -d/ -f2-)
+        echo $METRICS_PATH
+        if [ "$METRICS_PATH" == "" ] || [ "$METRICS_PATH" == "$HOSTPORT" ]; then
+          METRICS_PATH="metrics"
+        fi
+        HOSTPORT=$(echo $HOSTPORT | cut -d/ -f1)
+
         for HP in $(echo $HOSTPORT | tr ":" "\n")
         do
           if [ $a -eq 1 ]; then
@@ -99,11 +118,13 @@ if [ "$DNS_SCRAPE_TARGETS" != "" ]; then
         done
         cat >> $FILE <<- EOM
   - job_name: '$NAME'
+    metrics_path: /$METRICS_PATH
     dns_sd_configs:
       - names:
         - '$HOST'
         type: 'A'
         port: $PORT
+
 EOM
     done
 fi

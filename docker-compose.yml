@@ -9,7 +9,8 @@ services:
     environment:
       - SCRAPE_INTERVAL=15s
       - SCRAPE_TIMEOUT=10s
-      - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384 scraphere22@scrapehere2:38485
-      - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111 dnsscrape22@dnsscrape2:2222
+      - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384/teste/metrics scraphere22@scrapehere2:38485
+      - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111/metrics dnsscrape22@dnsscrape2:2222/teste/metrics
+      
 
   
