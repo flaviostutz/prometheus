@@ -82,9 +82,12 @@ if [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
         fi
         HOST=$(echo $HOST | cut -d/ -f1)
 
-        cat >> $FILE <<- EOM
+        cat >> $FILE <<- EOM      
+ 
+        
   - job_name: '$NAME'
     metrics_path: /$METRICS_PATH
+    scheme: $SCHEME_SCRAPE_TARGETS"
     static_configs:
     - targets: ['$HOST']
 
