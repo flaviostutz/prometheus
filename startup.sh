@@ -87,7 +87,7 @@ if [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
         
   - job_name: '$NAME'
     metrics_path: /$METRICS_PATH
-    scheme: $SCHEME_SCRAPE_TARGETS"
+    scheme: $SCHEME_SCRAPE_TARGETS
     static_configs:
     - targets: ['$HOST']
 
