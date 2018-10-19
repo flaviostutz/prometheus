@@ -82,9 +82,26 @@ if [ "$STATIC_SCRAPE_TARGETS" != "" ]; then
         fi
         HOST=$(echo $HOST | cut -d/ -f1)
 
-        cat >> $FILE <<- EOM
+        echo $SCHEME_SCRAPE_TARGETS
+         if [ "$SCHEME_SCRAPE_TARGETS" == "http" ] || [ "$SCHEME_SCRAPE_TARGETS" == "" ] ; then
+          SCHEME_SCRAPE_TARGETS="http"
+        fi
+
+         if [ "$SCHEME_SCRAPE_TARGETS" == "https" ]; then
+          SCHEME_SCRAPE_TARGETS="https"
+          TLS_IGNORE="tls_config:"
+          TRUE="insecure_skip_verify: true"
+
+        fi
+
+        cat >> $FILE <<- EOM      
+ 
+        
   - job_name: '$NAME'
     metrics_path: /$METRICS_PATH
+    scheme: $SCHEME_SCRAPE_TARGETS
+    $TLS_IGNORE
+       $TRUE
     static_configs:
     - targets: ['$HOST']
 
@@ -154,5 +171,3 @@ echo "Starting Prometheus..."
     --storage.tsdb.path=/prometheus \
     --web.console.libraries=/usr/share/prometheus/console_libraries \
     --web.console.templates=/usr/share/prometheus/consoles
-
-
