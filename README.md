@@ -37,6 +37,7 @@ services:
   - Prometheus will query DNS server for a type 'A' entry with name [record-name] and then try to get metrics from each returned IP at http://[found-ip]:[port]/metrics. 
   - [name] will be used to label all metrics gotten from this target
   - optionally, one can explicitly define the path to the metrics api via [metrics_path]
+- SCHEME_SCRAPE_TARGETS: http scheme for scraping `http|https`
 
 ## RULES
 
