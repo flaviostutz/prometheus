@@ -42,7 +42,8 @@ services:
   - optionally, one can explicitly define the path to the metrics api via [metrics_path]
 - SCHEME_SCRAPE_TARGETS: add http or https, in case of https, the variable will be set to    ignore the TLS certificate, using the tls_config option, speaking true to insecure_skip_verify.
 - REMOTE_WRITE: To enable the use of Prometheus’ remote write APIs.
-- REMOTE_READ: To enable the use of Prometheus’ remote write APIs.
+- REMOTE_READ: To enable the use of Prometheus’ remote read APIs.
+
 
 ## RULES
 
@@ -50,6 +51,5 @@ services:
 - The image will only build if nothing is wrong with the added rules
 - To add new rule files, you will need to extend this image and ADD it with your custom DockerFile:
 ```
-ADD <rules path> /etc/prometheus
-```
+ADD <rules path> /etc/prometheus```
 - An EMPTY rule was added for example purposes
