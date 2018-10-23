@@ -28,12 +28,12 @@ rule_files: $RULES
 EOM
 
 # Remote write configuration (for Graphite, OpenTSDB, or InfluxDB).
-#if [ "$REMOTE_WRITE" != "" ]; then
+if [ "$REMOTE_WRITE" != "" ]; then
     cat >> $FILE <<- EOM
 remote_write:
   - url: "$REMOTE_WRITE"
 EOM
-#fi
+fi
 
 # Remote read configuration (for InfluxDB only at the moment).
 if [ "$REMOTE_READ" != "" ]; then
