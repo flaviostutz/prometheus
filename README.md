@@ -24,8 +24,8 @@ services:
       - STATIC_SCRAPE_TARGETS=mynginx1@nginx1ip:8080 mysqlexporter1@sqlexporter1ip:7070
       - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111
       - SCHEME_SCRAPE_TARGETS=https
-      - REMOTE_WRITE=http://localhost:8086/api/v1/prom/write?db=prometheus
-      - REMOTE_READ=http://localhost:8086/api/v1/prom/read?db=prometheus
+      - REMOTE_WRITE=
+      - REMOTE_READ=
 ```
 
 ## ENVs
