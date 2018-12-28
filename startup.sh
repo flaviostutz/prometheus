@@ -25,9 +25,23 @@ done
 
 cat >> $FILE <<- EOM
 rule_files: $RULES
-
 EOM
 
+# Remote write configuration (for Graphite, OpenTSDB, or InfluxDB).
+if [ "$REMOTE_WRITE" != "" ]; then
+    cat >> $FILE <<- EOM
+remote_write:
+  - url: "$REMOTE_WRITE"
+EOM
+fi
+
+# Remote read configuration (for InfluxDB only at the moment).
+if [ "$REMOTE_READ" != "" ]; then
+    cat >> $FILE <<- EOM
+remote_read:
+  - url: "$REMOTE_READ"
+EOM
+fi
 
 #alert managers
 if [ "$ALERTMANAGER_TARGETS" != "" ]; then
@@ -169,5 +183,6 @@ echo "Starting Prometheus..."
 /bin/prometheus \
     --config.file=/etc/prometheus/prometheus.yml \
     --storage.tsdb.path=/prometheus \
+    --storage.tsdb.retention=45d \
     --web.console.libraries=/usr/share/prometheus/console_libraries \
     --web.console.templates=/usr/share/prometheus/consoles
