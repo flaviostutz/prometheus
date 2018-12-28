@@ -51,5 +51,6 @@ services:
 - The image will only build if nothing is wrong with the added rules
 - To add new rule files, you will need to extend this image and ADD it with your custom DockerFile:
 ```
-ADD <rules path> /etc/prometheus```
+ADD <rules path> /etc/prometheus
+```
 - An EMPTY rule was added for example purposes
