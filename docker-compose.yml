@@ -3,6 +3,7 @@ version: '3.5'
 services:
 
   prometheus:
+    image: abilioesteves/prometheus:1.0.0
     build: .
     ports:
       - 9090:9090
@@ -11,6 +12,6 @@ services:
       - SCRAPE_TIMEOUT=10s
       - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384/teste/metrics scraphere22@scrapehere2:38485
       - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111/metrics dnsscrape22@dnsscrape2:2222/teste/metrics
-      
-
-  
+      - SCHEME_SCRAPE_TARGETS=http
+      - REMOTE_WRITE=
+      - REMOTE_READ=
