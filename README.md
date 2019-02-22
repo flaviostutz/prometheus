@@ -15,7 +15,7 @@ version: '3.5'
 services:
 
   prometheus:
-    image: jeanfavero/prometheus-2
+    image: abilioesteves/prometheus:1.0.0
     ports:
       - 9090:9090
     environment:
