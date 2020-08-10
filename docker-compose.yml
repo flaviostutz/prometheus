@@ -11,6 +11,7 @@ services:
       - SCRAPE_TIMEOUT=10s
       # - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384/teste/metrics scraphere22@scrapehere2:38485
       # - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111/metrics dnsscrape22@dnsscrape2:2222/teste/metrics
+      # - ALERTMANAGER_TARGETS=alertmanager:8080
       - CONSUL_SCRAPE_TARGETS=consul@consul:8500/metrics
 
   consul:

@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gettext \
     && rm -rf /var/lib/apt/lists/*
 
-FROM prom/prometheus:v2.19.2
+FROM prom/prometheus:v2.20.1
 
 COPY --from=0 /usr/bin/envsubst /usr/bin/envsubst
 RUN ls -al /usr/bin/envsubst
