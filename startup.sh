@@ -160,6 +160,56 @@ EOM
     done
 fi
 
+
+#Consul scrapers
+if [ "$CONSUL_SCRAPE_TARGETS" != "" ]; then
+    #add each consul scrape target
+    for SL in $(echo $CONSUL_SCRAPE_TARGETS | tr " " "\n")
+    do
+        #this has to be done this (ugly) way because we don't have bash here, just sh!
+        NAME=''
+        HOSTPORT=''
+        PORT=''
+        HOST=''
+        METRICS_PATH=''
+        a=0
+        for ST in $(echo $SL | tr "@" "\n")
+        do
+          if [ $a -eq 0 ]; then
+            NAME=$ST
+            a=1
+          else
+            HOSTPORT=$ST
+          fi
+        done
+
+        METRICS_PATH=$(echo $HOSTPORT | cut -d/ -f2-)
+        echo $METRICS_PATH
+        if [ "$METRICS_PATH" == "" ] || [ "$METRICS_PATH" == "$HOSTPORT" ]; then
+          METRICS_PATH="metrics"
+        fi
+        HOSTPORT=$(echo $HOSTPORT | cut -d/ -f1)
+
+        for HP in $(echo $HOSTPORT | tr ":" "\n")
+        do
+          if [ $a -eq 1 ]; then
+            HOST=$HP
+            a=2
+          else
+            PORT=$HP
+          fi
+        done
+        cat >> $FILE <<- EOM
+  - job_name: '$NAME'
+    metrics_path: /$METRICS_PATH
+    consul_sd_configs:
+      - server: '$HOST:$PORT'
+
+EOM
+    done
+fi
+
+
 echo "==prometheus.yml=="
 cat $FILE
 echo "=================="
@@ -171,3 +221,4 @@ echo "Starting Prometheus..."
     --storage.tsdb.path=/prometheus \
     --web.console.libraries=/usr/share/prometheus/console_libraries \
     --web.console.templates=/usr/share/prometheus/consoles
+

@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gettext \
     && rm -rf /var/lib/apt/lists/*
 
-FROM prom/prometheus:v2.4.0
+FROM prom/prometheus:v2.19.2
 
 COPY --from=0 /usr/bin/envsubst /usr/bin/envsubst
 RUN ls -al /usr/bin/envsubst
@@ -17,6 +17,7 @@ ENV ALERTMANAGER_TARGETS ''
 ENV STATIC_SCRAPE_TARGETS ''
 ENV SCHEME_SCRAPE_TARGETS ''
 ENV DNS_SCRAPE_TARGETS ''
+ENV CONSUL_SCRAPE_TARGETS ''
 
 USER root
 ADD rules /etc/prometheus

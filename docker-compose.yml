@@ -9,8 +9,12 @@ services:
     environment:
       - SCRAPE_INTERVAL=15s
       - SCRAPE_TIMEOUT=10s
-      - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384/teste/metrics scraphere22@scrapehere2:38485
-      - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111/metrics dnsscrape22@dnsscrape2:2222/teste/metrics
-      
+      # - STATIC_SCRAPE_TARGETS=scraphere11@scraphere1:8384/teste/metrics scraphere22@scrapehere2:38485
+      # - DNS_SCRAPE_TARGETS=dnsscrape11@dnsscrape1:1111/metrics dnsscrape22@dnsscrape2:2222/teste/metrics
+      - CONSUL_SCRAPE_TARGETS=consul@consul:8500/metrics
 
-  
+  consul:
+    image: consul:1.4.2
+    ports:
+      - 8500:8500
+
